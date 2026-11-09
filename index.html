@@ -99,15 +99,15 @@
           <p class="contact-copy">작은 아이디어부터 구체적인 프로젝트까지,<br>편하게 이야기 나눠주세요.</p>
           <a class="email-link" href="mailto:hello@doyunkim.design">hello@doyunkim.design <span>↗</span></a>
         </div>
-        <form class="contact-form" id="contact-form">
+        <form class="contact-form" id="contact-form" novalidate>
           <label for="name">이름 <span>*</span></label>
-          <input id="name" name="name" type="text" placeholder="홍길동" required>
+          <input id="name" name="name" type="text" placeholder="홍길동" autocomplete="name" required>
           <label for="email">이메일 <span>*</span></label>
-          <input id="email" name="email" type="email" placeholder="hello@example.com" required>
-          <label for="message">프로젝트 이야기</label>
-          <textarea id="message" name="message" rows="3" placeholder="어떤 일을 함께 해볼까요?"></textarea>
+          <input id="email" name="email" type="email" placeholder="hello@example.com" autocomplete="email" required>
+          <label for="message">프로젝트 이야기 <span>*</span></label>
+          <textarea id="message" name="message" rows="3" placeholder="어떤 일을 함께 해볼까요?" required></textarea>
           <button class="button button-light" type="submit">메시지 보내기 <span>↗</span></button>
-          <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="form-status" id="contact-form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </section>
