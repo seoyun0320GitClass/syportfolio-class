@@ -99,9 +99,40 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.querySelector("#contact-form").addEventListener("submit", (event) => {
+const contactForm = document.querySelector("#contact-form");
+
+contactForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const status = document.querySelector(".form-status");
-  status.textContent = "메시지가 준비되었습니다. 곧 연락드릴게요!";
-  event.target.reset();
+  const name = contactForm.elements.namedItem("name");
+  const email = contactForm.elements.namedItem("email");
+  const message = contactForm.elements.namedItem("message");
+  const status = document.querySelector("#contact-form-status");
+  const errors = [];
+  let firstInvalidField = null;
+
+  [
+    { field: name, isInvalid: !name.value.trim(), error: "이름을 입력해 주세요." },
+    {
+      field: email,
+      isInvalid: !email.value.trim() || !email.validity.valid,
+      error: email.value.trim() ? "올바른 이메일 주소를 입력해 주세요." : "이메일을 입력해 주세요."
+    },
+    { field: message, isInvalid: !message.value.trim(), error: "메시지를 입력해 주세요." }
+  ].forEach(({ field, isInvalid, error }) => {
+    field.setAttribute("aria-invalid", String(isInvalid));
+    if (isInvalid) {
+      errors.push(error);
+      firstInvalidField ||= field;
+    }
+  });
+
+  if (errors.length > 0) {
+    status.textContent = errors.join(" ");
+    firstInvalidField.focus();
+    return;
+  }
+
+  status.textContent = "입력이 확인되었습니다. 이 실습에서는 이메일이 전송되지 않습니다.";
+  contactForm.reset();
+  [name, email, message].forEach((field) => field.removeAttribute("aria-invalid"));
 });
